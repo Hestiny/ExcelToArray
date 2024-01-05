@@ -135,10 +135,22 @@ namespace Norlo.ExcelToArray
 
             return excelToCs;
         }
+        
+        /// <summary>
+        /// 导出单个Excel到array
+        /// </summary>
+        /// <param name="excelFullPath"></param>
+        /// <returns></returns>
+        public static SheetInfo ExportExcel(string excelFullPath)
+        {
+            ExcelToArray excelToCs = new ExcelToArray();
+            excelToCs._excelInfoMap.Clear();
+            return excelToCs.ParseExcel(excelFullPath);
+        }
 
         #endregion
 
-        private void ParseExcel(string fileFullPath)
+        private SheetInfo ParseExcel(string fileFullPath)
         {
             using FileStream stream = new FileStream(fileFullPath, FileMode.Open, FileAccess.Read);
             IWorkbook workbook = null;
@@ -208,11 +220,14 @@ namespace Norlo.ExcelToArray
 
                     pickInfoList.Add(rowInfoList);
                 }
+                
 
                 if (!_excelInfoMap.TryAdd(sheetName, new SheetInfo(sheet, pickInfoList)))
                 {
                     Debug.LogErrorFormat("sheetName:{0} 重复了!", sheetName);
                 }
+
+                return new SheetInfo(sheet, pickInfoList);
             }
         }
 
