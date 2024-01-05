@@ -141,7 +141,7 @@ namespace Norlo.ExcelToArray
         /// </summary>
         /// <param name="excelFullPath"></param>
         /// <returns></returns>
-        public static SheetInfo ExportExcel(string excelFullPath)
+        public static List<SheetInfo> ExportExcel(string excelFullPath)
         {
             ExcelToArray excelToCs = new ExcelToArray();
             excelToCs._excelInfoMap.Clear();
@@ -150,8 +150,9 @@ namespace Norlo.ExcelToArray
 
         #endregion
 
-        private SheetInfo ParseExcel(string fileFullPath)
+        private List<SheetInfo> ParseExcel(string fileFullPath)
         {
+            List<SheetInfo> sheetInfos = new List<SheetInfo>();
             using FileStream stream = new FileStream(fileFullPath, FileMode.Open, FileAccess.Read);
             IWorkbook workbook = null;
             if (fileFullPath.EndsWith(".xlsx"))
@@ -159,7 +160,7 @@ namespace Norlo.ExcelToArray
             else if (fileFullPath.EndsWith(".xls"))
                 workbook = new HSSFWorkbook(stream); //2003
 
-            if (workbook == null) return default;
+            if (workbook == null) return sheetInfos;
             int sheetNumber = workbook.NumberOfSheets;
             for (int sheetIndex = 0; sheetIndex < sheetNumber; sheetIndex++)
             {
@@ -227,10 +228,10 @@ namespace Norlo.ExcelToArray
                     Debug.LogErrorFormat("sheetName:{0} 重复了!", sheetName);
                 }
 
-                return new SheetInfo(sheet, pickInfoList);
+                sheetInfos.Add(new SheetInfo(sheet, pickInfoList));
             }
 
-			return default;
+			return sheetInfos;
         }
 
         /// <summary>
