@@ -9,3 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### This is the first release of *\<ExcelToArray\>*.
 
 *Short description of this release*
+
+## [0.1.1] - 2024-1-5
+
+### 新增解析单个excel的接口.
+
+*支持单个excel文件解析*

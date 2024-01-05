@@ -159,7 +159,7 @@ namespace Norlo.ExcelToArray
             else if (fileFullPath.EndsWith(".xls"))
                 workbook = new HSSFWorkbook(stream); //2003
 
-            if (workbook == null) return;
+            if (workbook == null) return default;
             int sheetNumber = workbook.NumberOfSheets;
             for (int sheetIndex = 0; sheetIndex < sheetNumber; sheetIndex++)
             {
@@ -229,6 +229,8 @@ namespace Norlo.ExcelToArray
 
                 return new SheetInfo(sheet, pickInfoList);
             }
+
+			return default;
         }
 
         /// <summary>
